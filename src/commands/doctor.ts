@@ -14,7 +14,7 @@ export async function doctorCommand(args: CliArgs): Promise<void> {
   printResult(
     args,
     [
-      "ClaudeSync doctor",
+      "Claude Context Sync doctor",
       `GitHub: ${auth ? "OK" : "WARN - run gh auth login"}`,
       `Sessions: ${sessionExists ? "OK" : "WARN - not found"}`,
       `Path: ${paths.sessionDir}`,

@@ -15,7 +15,7 @@ export type ResolvedPaths = {
 };
 
 export async function resolvePaths(args: CliArgs): Promise<ResolvedPaths> {
-  const homeDir = path.join(os.homedir(), ".claudesync");
+  const homeDir = path.join(os.homedir(), ".claude-context-sync");
   const cwd = path.resolve(getFlag(args, "cwd") ?? process.cwd());
   await mkdir(homeDir, { recursive: true });
   await mkdir(path.join(homeDir, "backups"), { recursive: true });
@@ -38,7 +38,7 @@ async function resolveSessionDir(configPath: string): Promise<{ path: string; re
 
   const configSessionDir = await readConfigSessionDir(configPath);
   if (configSessionDir) {
-    return { path: path.resolve(configSessionDir), reason: "ClaudeSync config" };
+    return { path: path.resolve(configSessionDir), reason: "Claude Context Sync config" };
   }
 
   const home = os.homedir();

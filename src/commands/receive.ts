@@ -10,7 +10,7 @@ import { printResult } from "../core/output.js";
 
 export async function receiveCommand(args: CliArgs): Promise<void> {
   const gistId = getFlag(args, "gist") ?? args.positionals[0];
-  if (!gistId) throw new FriendlyError("Missing Gist ID.", "Run: npx claudesync@latest receive --gist <gistId>");
+  if (!gistId) throw new FriendlyError("Missing Gist ID.", "Run: npx claude-context-sync@latest receive --gist <gistId>");
 
   const paths = await resolvePaths(args);
   const token = resolveGitHubToken();

@@ -1,10 +1,11 @@
 {
-  "name": "claudesync",
+  "name": "claude-context-sync",
   "version": "0.1.0",
-  "description": "Encrypted Claude Code session handoff across devices.",
+  "description": "Encrypted Claude Code context and session handoff across devices.",
   "type": "module",
   "bin": {
-    "claudesync": "bin/claudesync.js"
+    "claude-context-sync": "bin/claudesync.js",
+    "ccsync": "bin/claudesync.js"
   },
   "files": [
     "bin",

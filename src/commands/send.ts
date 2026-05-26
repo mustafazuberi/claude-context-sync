@@ -27,9 +27,9 @@ export async function sendCommand(args: CliArgs): Promise<void> {
   const gist = await createHandoffGist(
     token,
     payload,
-    `claudesync-handoff:${createdAt}:${os.hostname()}:${projectHint}`,
+    `claude-context-sync-handoff:${createdAt}:${os.hostname()}:${projectHint}`,
   );
-  const receiveCommand = `npx claudesync@latest receive --gist ${gist.id}`;
+  const receiveCommand = `npx claude-context-sync@latest receive --gist ${gist.id}`;
   const copied = hasFlag(args, "copy") ? copyToClipboard(receiveCommand) : false;
 
   printResult(

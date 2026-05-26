@@ -19,11 +19,11 @@ async function main() {
   if (command === "receive" || command === "pull") return receiveCommand(args);
   if (command === "doctor") return doctorCommand(args);
 
-  throw new FriendlyError(`Unknown command: ${command}`, "Run: npx claudesync@latest --help");
+  throw new FriendlyError(`Unknown command: ${command}`, "Run: npx claude-context-sync@latest --help");
 }
 
 function printHelp() {
-  console.log(`ClaudeSync\n\nUsage:\n  claudesync install\n  claudesync send [--copy]\n  claudesync receive --gist <gistId>\n  claudesync doctor\n\nOptions:\n  --cwd <path>    Resolve paths from another folder\n  --json          Print machine-readable output\n  --debug         Show technical errors`);
+  console.log(`Claude Context Sync\n\nUsage:\n  claude-context-sync install\n  claude-context-sync send [--copy]\n  claude-context-sync receive --gist <gistId>\n  claude-context-sync doctor\n\nAlias:\n  ccsync send\n\nOptions:\n  --cwd <path>    Resolve paths from another folder\n  --json          Print machine-readable output\n  --debug         Show technical errors`);
 }
 
 main().catch((error: unknown) => {

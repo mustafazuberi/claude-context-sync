@@ -12,7 +12,7 @@ export async function installCommand(args: CliArgs): Promise<void> {
   resolveGitHubToken();
   const passphrase = await askConfirmedPassphrase();
   const config = await readConfig(paths.configPath);
-  const verifier = await encryptBytes(Buffer.from("claudesync", "utf8"), passphrase, {
+  const verifier = await encryptBytes(Buffer.from("claude-context-sync", "utf8"), passphrase, {
     createdAt: Date.now(),
   });
 
@@ -27,13 +27,13 @@ export async function installCommand(args: CliArgs): Promise<void> {
   printResult(
     args,
     [
-      "Installed ClaudeSync",
+      "Installed Claude Context Sync",
       "GitHub: OK",
       `Sessions: ${paths.sessionDir}`,
       `Config: ${paths.configPath}`,
       "",
       "Next:",
-      "npx claudesync@latest send",
+      "npx claude-context-sync@latest send",
     ].join("\n"),
     {
       ok: true,

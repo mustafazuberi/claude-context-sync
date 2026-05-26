@@ -1,19 +1,19 @@
-# ClaudeSync Product Gaps and Decisions
+# Claude Context Sync Product Gaps and Decisions
 
-This file captures the product decisions made so far and the gaps that must be solved before ClaudeSync feels reliable enough to publish.
+This file captures the product decisions made so far and the gaps that must be solved before Claude Context Sync feels reliable enough to publish.
 
 ## Core Product Decision
 
-ClaudeSync is an encrypted Claude Code session handoff tool.
+Claude Context Sync is an encrypted Claude Code session handoff tool.
 
 The core flow is:
 
 ```bash
 # Device A
-npx claudesync@latest send
+npx claude-context-sync@latest send
 
 # Device B
-npx claudesync@latest receive --gist <gistId>
+npx claude-context-sync@latest receive --gist <gistId>
 ```
 
 Each `send` creates a new private GitHub Gist containing one encrypted handoff payload. Device B downloads the exact handoff by Gist ID and decrypts it using the user's passphrase.
@@ -24,7 +24,7 @@ Each `send` creates a new private GitHub Gist containing one encrypted handoff p
 - Use private Gists.
 - Create one Gist per handoff.
 - Store only encrypted ciphertext in GitHub.
-- Do not use ClaudeSync-owned backend storage in v1.
+- Do not use Claude Context Sync-owned backend storage in v1.
 
 Reasoning: this avoids asking users to trust our infrastructure while still removing manual file transfer.
 
@@ -59,13 +59,13 @@ Device A: C:\Users\Ali\work\my-app
 Device B: /Users/ali/dev/my-app
 ```
 
-If ClaudeSync restores sessions under Device A's encoded path, the sessions may not appear naturally under Device B's project.
+If Claude Context Sync restores sessions under Device A's encoded path, the sessions may not appear naturally under Device B's project.
 
 ## Proposed Feature: Project Remapping
 
 Feature name: **Project Remapping**
 
-Project Remapping means ClaudeSync maps an imported handoff from Device A's project identity to the correct local project path on Device B.
+Project Remapping means Claude Context Sync maps an imported handoff from Device A's project identity to the correct local project path on Device B.
 
 The strongest matching signal is Git remote origin.
 
@@ -83,7 +83,7 @@ On `send`, include non-secret metadata in the encrypted payload:
 
 ### Receive Matching Strategy
 
-On `receive`, ClaudeSync should try to find the matching repo on Device B.
+On `receive`, Claude Context Sync should try to find the matching repo on Device B.
 
 Matching order:
 
@@ -96,12 +96,12 @@ Matching order:
 
 ## Local Repo Discovery Gap
 
-ClaudeSync needs a way to discover repos on Device B.
+Claude Context Sync needs a way to discover repos on Device B.
 
 Potential sources:
 
 - Current working directory.
-- Recently seen repos stored in `~/.claudesync/config.json`.
+- Recently seen repos stored in `~/.claude-context-sync/config.json`.
 - Claude's existing `~/.claude/projects` session metadata, because JSONL entries often include `cwd`.
 - Optional configured scan roots, for example:
 
@@ -119,7 +119,7 @@ If Project Remapping cannot confidently find a local repo, receive should still 
 
 Fallback behavior:
 
-- Import sessions into a ClaudeSync-managed archive project folder.
+- Import sessions into a Claude Context Sync-managed archive project folder.
 - Preserve all sessions.
 - Print a clear note that this was a global/archive import.
 
@@ -128,7 +128,7 @@ Example output:
 ```text
 Received Claude handoff
 Imported: 4
-Destination: global ClaudeSync archive
+Destination: global Claude Context Sync archive
 
 Note:
 No matching local repo was found.
@@ -145,7 +145,7 @@ Preferred receive UX:
 
 ```bash
 cd my-app
-npx claudesync@latest receive --gist <gistId>
+npx claude-context-sync@latest receive --gist <gistId>
 ```
 
 Meaning:
@@ -154,7 +154,7 @@ Meaning:
 Import this handoff into the project I am currently in.
 ```
 
-If ClaudeSync uses a fallback, it must say so explicitly.
+If Claude Context Sync uses a fallback, it must say so explicitly.
 
 ## Other Known Gaps
 
@@ -173,7 +173,7 @@ JSONL entries may contain the original `cwd`.
 
 Open question:
 
-- Should ClaudeSync rewrite `cwd` fields to Device B's target path?
+- Should Claude Context Sync rewrite `cwd` fields to Device B's target path?
 - Or should it preserve original transcripts exactly and only remap storage location?
 
 Default assumption for now:
